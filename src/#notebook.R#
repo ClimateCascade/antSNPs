@@ -9,10 +9,10 @@ ids <- x[(1:length(x))[c(T,F)]]
 x <- x[(1:length(x))[c(F,T)]]
 
 seqs <- do.call(rbind,lapply(x,function(x) matrix(strsplit(x,split='')[[1]],nrow=1)))
+rownames(seqs) <- ids
 seqs <- as.DNAbin(tolower(seqs))
 dist.seq <- dist.gene(seqs)
 stree <- nj(dist.seq)
-
 png('rplot.png')
 plot(stree)
 dev.off()
