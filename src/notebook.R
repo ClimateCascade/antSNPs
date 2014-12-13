@@ -3,15 +3,13 @@
 
 ##http://chibba.pgml.uga.edu/snphylo/
 
+library(phyclust)
+library(ape)
+
 ###Building a tree
-x <- readLines('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
-ids <- x[(1:length(x))[c(T,F)]]
-x <- x[(1:length(x))[c(F,T)]]
-
-seqs <- 
-dist.seq <- dist.gene(seqs)
-stree = nj()
-
+x <- read.fasta('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
+set.seed(12345)
+nnt <- phyclust.edist(x$org)
 png('rplot.png')
-plot(stree)
+plot(nnt)
 dev.off()
