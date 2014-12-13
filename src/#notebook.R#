@@ -8,7 +8,7 @@ x <- readLines('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
 ids <- x[(1:length(x))[c(T,F)]]
 x <- x[(1:length(x))[c(F,T)]]
 
-seqs <- 
+seqs <- do.call(rbind,lapply(x,function(x) matrix(strsplit(x,split='')[[1]],nrow=1)))
 dist.seq <- dist.gene(seqs)
 stree = nj()
 
