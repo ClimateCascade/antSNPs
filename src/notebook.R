@@ -9,7 +9,9 @@ library(ape)
 ###Building a tree
 x <- read.fasta('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
 set.seed(12345)
-nnt <- phyclust.edist(x$org)
+x.clust <- phyclust.edist(x$org)
+x.nnt <- nj(x.clust)
 png('rplot.png')
-plot(nnt)
+plot(x.nnt)
 dev.off()
+
