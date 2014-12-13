@@ -11,9 +11,10 @@ x <- read.fasta('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
 set.seed(12345)
 x.clust <- phyclust.edist(x$org)
 x.nnt <- nj(x.clust)
-x.nnt$tip.label
+x.nnt$tip.label <- x$seqname
 x.rnt <- multi2di(x.nnt)
-x.draw <- x.rnt
+x.mlt <- mlphylo(phy=x.rnt)
+x.draw <- x.mlt
 png('rplot.png')
 plot(x.draw)
 dev.off()
