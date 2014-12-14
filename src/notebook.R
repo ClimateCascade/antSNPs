@@ -35,18 +35,25 @@ ids <- x[(1:length(x))[c(T,F)]]
 x <- do.call(rbind,lapply(x[(1:length(x))[c(F,T)]],function(x) strsplit(x,split='')[[1]]))
 rownames(x) <- ids
 x <- tolower(x)
-
-
 input <- as.DNAbin(x)
 
 
 set.seed(12345)
-dist.dna(input)
-x.nnt <- njs()
-x.nnt$tip.label <- x$seqname
+dm <- dist.dna(input,model='JC69')
+x.upgma <- upgma(dm)
+##x.upgma <- optim.parsimony(upgma(dm),phyDat(input))
+
+fit = pml(x.upgma, data=phyDat(input))
+fitJC = optim.pml(fit, TRUE)
+bs = bootstrap.pml(fitJC, bs=100, optNni=TRUE,control = pml.control(trace = 0))
+png('upgma.png')
+plotBS(fitJC$tree, bs)
+dev.off()
+
+x.nnt <- njs(dm <- dist.dna(input,model='JC69'))
 x.rnt <- multi2di(x.nnt)
 ##x.mlt <- mlphylo(phy=x.rnt)
-x.draw <- x.rnt
+x.draw <- x.upgma
 png('rplot.png')
 plot(x.draw)
 dev.off()
