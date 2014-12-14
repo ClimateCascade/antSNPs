@@ -3,16 +3,49 @@
 
 ##http://chibba.pgml.uga.edu/snphylo/
 
+
+## Code	Meaning	Etymology			Complement	Opposite
+## A	A	Adenosine			T		B
+## T/U	T	Thymidine/Uridine		A		V
+## G	G	Guanine				C		H
+## C	C	Cytidine			G		D
+## K	G or T	Keto				M		M
+## M	A or C	Amino				K		K
+## R	A or G	Purine				Y		Y
+## Y	C or T	Pyrimidine			R		R
+## S	C or G	Strong				S		W
+## W	A or T	Weak				W		S
+## B	C or G or T				not A (B comes after A)	V	A
+## V	A or C or G				not T/U (V comes after U)	B	T/U
+## H	A or C or T				not G (H comes after G)		D	G
+## D	A or G or T				not C (D comes after C)		H	C
+## X/N	G or A or T or C			any N .
+## .	not G or A or T or C			    . N
+## -	gap of indeterminate length		    
+
 library(phyclust)
 library(ape)
+library(phangorn)
 
 ###Building a tree
-x <- read.fasta('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
+###x <- read.fasta('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
+## x <- read.dna('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas',format='fasta')
+x <- readLines('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
+ids <- x[(1:length(x))[c(T,F)]]
+x <- do.call(rbind,lapply(x[(1:length(x))[c(F,T)]],function(x) strsplit(x,split='')[[1]]))
+rownames(x) <- ids
+x <- tolower(x)
+
+
+input <- as.DNAbin(x)
+
+
 set.seed(12345)
-x.clust <- phyclust.edist(x$org)
-x.nnt <- nj(x.clust)
-x.rnt <- root(x.nnt,outgroup=1:5,resolve.root=TRUE)
+dist.dna(input)
+x.nnt <- njs()
+x.nnt$tip.label <- x$seqname
 x.rnt <- multi2di(x.nnt)
+##x.mlt <- mlphylo(phy=x.rnt)
 x.draw <- x.rnt
 png('rplot.png')
 plot(x.draw)
