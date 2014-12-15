@@ -43,7 +43,9 @@ input <- as.DNAbin(x)
 
 set.seed(12345)
 dm <- dist.dna(input,model='JC69')
-x.nnt <- njs(dm <- dist.dna(input,model='JC69'))
+x.nj <- nj(dm)
+plot(x.nj)
+x.nnt <- njs(dm)
 x.rnt <- multi2di(x.nnt)
 plot(x.nnt)
 plot(x.rnt)
@@ -51,3 +53,16 @@ plot(x.rnt)
 
 library(sna)
 gplot(as.matrix(dm))
+
+
+###
+library(ctv)
+library(ape)
+library(picante)
+library(phytools)
+ref <- c("U15717", "U15718", "U15719", "U15720",
+         "U15721", "U15722", "U15723", "U15724") 
+gbs <- read.GenBank(ref,species.names=TRUE)
+x <- fastBM(tree)
+tree <- rbdtree(1,0,Tmax=4)
+phylosig(tree,

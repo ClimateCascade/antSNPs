@@ -25,40 +25,51 @@
 
 library(phyclust)
 library(ape)
+library(ctv)
+library(picante)
 ###library(phangorn)
 
 ###Building a tree
 ###x <- read.fasta('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
 ## x <- read.dna('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas',format='fasta')
+
 owd <- getwd()
 setwd('~/Dropbox/WarmAntDimensions/Phytotron 2013')
 x <- readLines('Phytotron_ant_sequences_12-14-14_eol.fas')
 setwd(owd)
-
 ids <- x[(1:length(x))[c(T,F)]]
 x <- do.call(rbind,lapply(x[(1:length(x))[c(F,T)]],function(x) strsplit(x,split='')[[1]]))
 rownames(x) <- ids
 x <- tolower(x)
 input <- as.DNAbin(x)
-
-set.seed(12345)
-dm <- dist.dna(input,model='JC69')
+gen.dm <- dm <- dist.dna(input,model='JC69')
 x.nj <- nj(dm)
 plot(x.nj)
-x.nnt <- njs(dm)
-x.rnt <- multi2di(x.nnt)
-plot(x.nnt)
-plot(x.rnt)
+
+##Get sample data
+library(gdata)
+trs <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/Phytotron\ colonies\ 2013\ Transcriptome.xlsx',sheet=1)
+trs.id <- sapply(as.character(trs[,1]),function(x) paste(strsplit(x,split='-')[[1]][2:3],collapse=''))
+###
+pid <- substr(sapply(ids,function(x) strsplit(x,split='_')[[1]][1]),4,7)
+pid <- sub('-','',pid)
+###
+seq.info <- trs[na.omit(match(pid,trs.id)),]
+###
+library(geosphere)
+###NOTE! Adding in the same lat and lon coordinates from brp2 for brp9
+seq.info[6,c(17,18)] <- c(35.9264,81.95381249)
+geo.dm <- as.dist(distm(seq.info[,c(18,17)]))
+
+###testing genetic and geographic distance
+library(vegan)
+mantel(gen.dm,geo.dm)
 
 
-library(sna)
-gplot(as.matrix(dm))
+
 
 
 ###
-library(ctv)
-library(ape)
-library(picante)
 library(phytools)
 ref <- c("U15717", "U15718", "U15719", "U15720",
          "U15721", "U15722", "U15723", "U15724") 
