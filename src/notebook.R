@@ -25,37 +25,44 @@
 
 library(phyclust)
 library(ape)
-library(phangorn)
+###library(phangorn)
 
 ###Building a tree
 ###x <- read.fasta('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
 ## x <- read.dna('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas',format='fasta')
-x <- readLines('/N/dc2/scratch/scahan/sandbox/UVM_ant_sequences.fas')
+owd <- getwd()
+setwd('~/Dropbox/WarmAntDimensions/Phytotron 2013')
+x <- readLines('Phytotron_ant_sequences_12-14-14_eol.fas')
+setwd(owd)
+
 ids <- x[(1:length(x))[c(T,F)]]
 x <- do.call(rbind,lapply(x[(1:length(x))[c(F,T)]],function(x) strsplit(x,split='')[[1]]))
 rownames(x) <- ids
 x <- tolower(x)
 input <- as.DNAbin(x)
 
-
 set.seed(12345)
 dm <- dist.dna(input,model='JC69')
-x.upgma <- upgma(dm)
-x.boot <- boot.phylo(phy=x.upgma,x=input,FUN=function(xx) upgma(dist.dna(xx,model='JC69')))
-
-##x.upgma <- optim.parsimony(upgma(dm),phyDat(input))
-fit = pml(x.upgma, data=phyDat(input))
-fitJC = optim.pml(fit, TRUE)
-bs = bootstrap.pml(fitJC, bs=100, optNni=TRUE,control = pml.control(trace = 0),multicore=FALSE)
-png('upgma.png')
-plotBS(fitJC$tree, bs)
-dev.off()
-
-x.nnt <- njs(dm <- dist.dna(input,model='JC69'))
+x.nj <- nj(dm)
+plot(x.nj)
+x.nnt <- njs(dm)
 x.rnt <- multi2di(x.nnt)
-##x.mlt <- mlphylo(phy=x.rnt)
-x.draw <- x.upgma
-png('rplot.png')
-plot(x.draw)
-dev.off()
+plot(x.nnt)
+plot(x.rnt)
 
+
+library(sna)
+gplot(as.matrix(dm))
+
+
+###
+library(ctv)
+library(ape)
+library(picante)
+library(phytools)
+ref <- c("U15717", "U15718", "U15719", "U15720",
+         "U15721", "U15722", "U15723", "U15724") 
+gbs <- read.GenBank(ref,species.names=TRUE)
+x <- fastBM(tree)
+tree <- rbdtree(1,0,Tmax=4)
+phylosig(tree,
