@@ -1,5 +1,33 @@
 ###Ant snps
+
+###16dec2014
+##looking for under-sampled areas
+library(gdata)
+rsm.1 <- read.xls('/Users/Aeolus/Dropbox/warmantdimensions/Genomics/RADseq_mastersheet_2014.xlsx',sheet=1)
+rsm.2 <- read.xls('/Users/Aeolus/Dropbox/warmantdimensions/Genomics/RADseq_mastersheet_2014.xlsx',sheet=2)
+rsm <- rbind(rsm.1[,1:10],rsm.2[,1:10])
+phy <- read.csv('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/full\ phytotron\ data.csv')
+phy <- phy[as.character(phy$Site)!="",]
+rsm.sites <- as.character(apply(rsm[,2:3],1,function(x) paste(x,collapse='')))
+rsm.sites <- sub(' ','',rsm.sites)
+rsm.sites <- sub('-','',rsm.sites)
+rsm.sites <- sub('_','',rsm.sites)
+rsm.sites <- toupper(rsm.sites)
+phy.sites <- as.character(unique(phy$Site))
+phy.sites <- sub(' ','',phy.sites)
+phy.sites <- toupper(phy.sites)
+###
+phy.missing <- phy.sites[is.na(match(phy.sites,rsm.sites))]
+all(sort(phy.missing)==sort(phy.sites[phy.sites%in%rsm.sites==FALSE]))
+phy.fuzz <- sapply(phy.missing,function(x,y) y[agrep(x,y)],y=rsm.sites)
+
+###MAGSPR4 BRM8 BRM4 APB8 HSP7 DSF12 BEAR5 BEAR6 HF001 SEB8 MM1 KBH1 KBH4B MB2 MB1    
+
+pi
+pi
+
 ###13dec2014
+
 
 ##http://chibba.pgml.uga.edu/snphylo/
 
