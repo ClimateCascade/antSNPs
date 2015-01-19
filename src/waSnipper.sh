@@ -1,8 +1,6 @@
 #! /bin/bash
 
 ###To demultiplex and filter sequencer lane:
-
-
 gunzip ddRAD1.fq.gz
 
 # use sabre.sh to demultiplex.  Note - need to make barcode file in correct format:
