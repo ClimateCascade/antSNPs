@@ -1,8 +1,33 @@
 ###Ant snps
 
+source('funcs.R')
+
+###17dec2014
+rsm.1 <- read.xls('/Users/Aeolus/Dropbox/warmantdimensions/Genomics/RADseq_mastersheet_2014.xlsx',sheet=1)
+rsm.2 <- read.xls('/Users/Aeolus/Dropbox/warmantdimensions/Genomics/RADseq_mastersheet_2014.xlsx',sheet=2)
+pvch <- read.xls('/Users/Aeolus/Library/Containers/com.apple.mail/Data/Library/Mail\ Downloads/63A54484-980A-47B8-9938-B48B98126534/phytotron\ vouchers.xlsx',sheet=1) ###phytotron vouchers
+rsm <- rbind(rsm.1[,1:10],rsm.2[,1:10])
+rsm.sites <- as.character(apply(rsm[,2:3],1,function(x) paste(x,collapse='')))
+rsm.sites <- sub(' ','',rsm.sites)
+rsm.sites <- sub('-','',rsm.sites)
+rsm.sites <- sub('_','',rsm.sites)
+rsm.sites <- toupper(rsm.sites)
+pvch$Colony.ID <- sub('-','',as.character(pvch$Colony.ID))
+pvch$Colony.ID <- sub(' ','',pvch$Colony.ID)
+pvch$Colony.ID <- sub('_','',pvch$Colony.ID)
+pvch$Colony.ID <- toupper(pvch$Colony.ID)
+pvch$Colony.ID[pvch$Colony.ID%in%rsm.sites==FALSE]
+
+pvch[(pvch$Colony.ID%in%rsm.sites)==FALSE&pvch[,4]=="voucherNCSU",]
+pvch.fuzzy <- sapply(pvch$Colony.ID,function(x,y) y[agrep(x,y)],y=rsm.sites)
+dim(do.call(rbind,pvch.fuzzy))
+rsm.sites[rsm.sites%in%pvch$Colony.ID==FALSE]
+
+pi
+
 ###16dec2014
 ##looking for under-sampled areas
-library(gdata)
+
 rsm.1 <- read.xls('/Users/Aeolus/Dropbox/warmantdimensions/Genomics/RADseq_mastersheet_2014.xlsx',sheet=1)
 rsm.2 <- read.xls('/Users/Aeolus/Dropbox/warmantdimensions/Genomics/RADseq_mastersheet_2014.xlsx',sheet=2)
 rsm <- rbind(rsm.1[,1:10],rsm.2[,1:10])
@@ -16,12 +41,63 @@ rsm.sites <- toupper(rsm.sites)
 phy.sites <- as.character(unique(phy$Site))
 phy.sites <- sub(' ','',phy.sites)
 phy.sites <- toupper(phy.sites)
+###other sampling sites
+oss <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Sampling\ protocols\ and\ data\ sheets/Geographic\ information/PhytotronColonies_2013.xlsx',sheet=1)
+oss.sites <- as.character(oss[,1])
+oss.sites <- sub(' ','',oss.sites);oss.sites <- sub(' ','',oss.sites);oss.sites <- sub(' ','',oss.sites)
+oss.sites <- sub('-','',oss.sites)
+oss.sites <- sub('_','',oss.sites)
+oss.sites <- toupper(oss.sites)
+oss.sites <- sub('LDCMAGSPRINGS','MAGSPR',oss.sites)
+oss.sites[oss.sites%in%(unique(c(rsm.sites,phy.sites)))]
+oss.sites[oss.sites%in%(unique(c(rsm.sites,phy.sites)))==FALSE]
+oss.missing <- oss.sites[is.na(match(oss.sites,c(rsm.sites,phy.sites)))]
+oss.fuzz <- sapply(oss.missing,function(x,y) y[agrep(x,y)],y=c(rsm.sites,phy.sites))
+oss.sites <- sapply(oss.sites,function(x) paste(strsplit(x,split='')[[1]][strsplit(x,split='')[[1]]%in%LETTERS],collapse=''))
+
 ###
 phy.missing <- phy.sites[is.na(match(phy.sites,rsm.sites))]
 all(sort(phy.missing)==sort(phy.sites[phy.sites%in%rsm.sites==FALSE]))
 phy.fuzz <- sapply(phy.missing,function(x,y) y[agrep(x,y)],y=rsm.sites)
 
+###Sites in the phytotron, missing from the SNP sampling
 ###MAGSPR4 BRM8 BRM4 APB8 HSP7 DSF12 BEAR5 BEAR6 HF001 SEB8 MM1 KBH1 KBH4B MB2 MB1    
+
+###Geographic coverage
+oss.loc <- oss
+oss.loc[,1] <- oss.sites
+oss.loc <- oss.loc[duplicated(oss.sites)==FALSE,1:5]
+elev <- apply(oss.loc[,3:4],1,function(x) get.elev(-x[2],x[1]))
+plot(oss.loc$Elevation..m.[is.na(oss.loc$Elevation..m.)==FALSE],elev[is.na(oss.loc$Elevation..m.)==FALSE])
+oss.res <- residuals(lm(oss.loc$Elevation..m.[is.na(oss.loc$Elevation..m.)==FALSE]~elev[is.na(oss.loc$Elevation..m.)==FALSE]))
+plot(oss.loc$Elevation..m.[is.na(oss.loc$Elevation..m.)==FALSE]~oss.res)
+data.frame(oss.loc[is.na(oss.loc$Elevation..m.)==FALSE,][abs(oss.res)>100,]
+           ,get.elev=elev[is.na(oss.loc$Elevation..m.)==FALSE][abs(oss.res)>100])
+###look at spatial and elevation coverage by rms
+rsm.loc <- sapply(rsm.sites,function(x) paste(strsplit(x,split='')[[1]][strsplit(x,split='')[[1]]%in%LETTERS],collapse=''))
+oss.covered <- oss.loc[match(oss.loc[,1],rsm.loc),]
+oss.missing <- oss.loc;oss.loc[,5] <- elev
+oss.missing <- oss.loc[is.na(match(oss.loc[,1],rsm.loc)),]
+oss.col <- as.numeric(is.na(match(oss.loc[,1],rsm.loc)))+1
+oss.cex <- (elev-mean(elev)) / sd(elev);oss.cex <- oss.cex + abs(min(oss.cex)) + 1
+
+plot(-oss.loc$Longitude,oss.loc$Latitude,xlab='Longitude',ylab='Latitude',
+     col=oss.col,pch=19,cex=oss.cex)
+legend('topleft',legend=c('RadSeq List','Not'),pch=19,col=c(1,2))
+plot(1:length(elev)~elev,pch=19,col=oss.col,cex=oss.cex,yaxt='n',ylab='Dataset Ordering',xlab='Elevation (m)')
+
+out <- oss.missing[order(oss.missing$Latitude,-oss.missing$Elevation..m.),]
+out <- data.frame(out,1:nrow(out))
+colnames(out) <- c('Site','Name','Latitude','Longitude','Elevation','Priority')
+## x.refs <- c('MAGSPR4','BRM8','BRM4','APB8','HSP7','DSF12','BEAR5','BEAR6','HF001','SEB8','MM1','KBH1','KBH4B','MB2','MB1')
+## x.refs <- sapply(x.refs,function(x) paste(strsplit(x,split='')[[1]][strsplit(x,split='')[[1]]%in%LETTERS],collapse=''))
+## out <- out[out[,1]%in%x.refs==FALSE,]
+write.csv(out,file='~/Dropbox/WarmAntDimensions/Genomics/MKLau_AddMe.csv',row.names=FALSE)
+
+LDCHW,LDCSESQUI,LDCFMU,LDCGSMNP,LDCDW,LDCIJAMS,FR,OLDRC,LDCWV,BRM,KBH      
+
+###Get mean annual temperature
+###getData('worldclim', var='tmin', res=0.5, lon=5, lat=45)
 
 pi
 pi
