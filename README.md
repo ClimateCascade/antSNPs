@@ -10,10 +10,9 @@ Distance?
 - 50+ samples
 - what is next? structure
 - more sequencing at unc
-- look at radseq master list
+- look at radseq master list (done. emailed sara the extra colonies)
 
 - trait reconstruction
-
 
 - tree building
 - STRUCTURE (http://adegenet.r-forge.r-project.org/)
