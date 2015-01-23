@@ -24,6 +24,23 @@ dim(do.call(rbind,pvch.fuzzy))
 rsm.sites[rsm.sites%in%pvch$Colony.ID==FALSE]
 
 pi
+=======
+###18Jan2015
+#using pyrad
+
+#1 - create a new directory and copy the *.fastq.gz and *.barcodes files
+#2 - create a params.txt file
+#3 - edit the params.txt file
+#4 - run ~/.../pyRAD -p params.txt (~/.../pyRAD -p params.txt -s 234567, will run 2:7)
+#5 - post analyses
+###http://nbviewer.ipython.org/gist/dereneaton/1f661bfb205b644086cc/tutorial_RAD_3.0.ipynb
+
+
+##Processing SNP data from RAD-Seq
+#http://nbviewer.ipython.org/gist/dereneaton/af9548ea0e94bff99aa0/pyRAD_v.3.0.ipynb#4.-Running-pyRAD
+#Make sure to look at the figure for ddRAD
+See the waRadpipe.sh
+
 
 ###16dec2014
 ##looking for under-sampled areas
