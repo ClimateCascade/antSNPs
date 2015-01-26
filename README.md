@@ -1,6 +1,16 @@
 antSNPs
 =======
 
+##max compute info 
+https://129.79.213.150/data/bdkd.html#3
+
+##Setting up github
+- add an rsa from mason to github, so github recognizes mason
+- change the .git/config file from https to ssh
+
+###Manuscript Outline
+Use Keller et al. 2010 as a model
+
 aphaenogaster SNP processing
 
 Tree building program?
