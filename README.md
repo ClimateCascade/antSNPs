@@ -1,6 +1,10 @@
 antSNPs
 =======
 
+##27jan2015
+g
+
+##26jan2015
 ##max compute info 
 https://129.79.213.150/data/bdkd.html#3
 

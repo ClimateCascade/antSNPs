@@ -1,6 +1,22 @@
 antSNPs
 =======
 
+##27jan2015
+current pipline outline
+1. demultiplex sabre (qsub with sabre.sh) pyRAD is slow
+2. snp call with pyRAD? 
+
+##26jan2015
+##max compute info 
+https://129.79.213.150/data/bdkd.html#3
+
+##Setting up github
+- add an rsa from mason to github, so github recognizes mason
+- change the .git/config file from https to ssh
+
+###Manuscript Outline
+Use Keller et al. 2010 as a model
+
 aphaenogaster SNP processing
 
 Tree building program?
@@ -10,7 +26,7 @@ Distance?
 - 50+ samples
 - what is next? structure
 - more sequencing at unc
-- look at radseq master list
+- look at radseq master list (done. emailed sara the extra colonies)
 
 - trait reconstruction
 
