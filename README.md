@@ -2,6 +2,9 @@ antSNPs
 =======
 
 ##30jan2015
+spatial ecology from Jose-Marie Fortin
+http://www.cambridge.org/us/academic/subjects/life-sciences/ecology-and-conservation/spatial-analysis-guide-ecologists
+
 Step 1: de-multiplexing. This step uses information from the barcodes file to separate sequences from your raw fastq files into a separate file for each sample. These are placed in a new directory within your working directory called “fastq/”. File names are not important for single end data. However, for paired-end reads it is necessary that the raw data file names follow a specific format: The first read files must contain "_R1_" in the name, and the second read files must be identical to the first read files but with "_R2_" in place of "_R1_". Here is an example pair of input files:
 
 Step 2: filtering. This step uses the Phred quality score recorded in the FASTQ data files to filter low quality base calls. Sites with a score below a set value are changed into “N”s, and reads with more than the number of allowed “N”s are discarded. Files are written to the “edits/” directory with the suffix “.edit”. It also implements a number of optional filters.
