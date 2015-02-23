@@ -4,6 +4,7 @@
 
 1. start analyzing Fasta = UVM_ant_sequences.fas 
 2. start testing waRADpipe.sh
+3. create a database
 
 ###18Jan2015
 #using pyrad
