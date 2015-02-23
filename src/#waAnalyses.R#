@@ -1,8 +1,0 @@
-###warm ant population genetic analyses
-
-## sample information 
-library('gdata')
-
-info <- read.xls('/N/u/mklau/Mason/Dropbox/WarmAntDimensions/Genomics/RADseq_mastersheet_2014.xlsx',sheet=2)
-
-## sequence information
