@@ -1,4 +1,10 @@
 ###Ant snps
+
+###22Feb2015
+
+1. start analyzing Fasta = UVM_ant_sequences.fas 
+2. start testing waRADpipe.sh
+
 ###18Jan2015
 #using pyrad
 
