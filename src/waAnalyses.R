@@ -59,6 +59,10 @@ plot(hclust(rad1.d))
 ### c('MB-6','DSF-8','SEB-9','BRF-4','HSP-6','DSF-11','EW-4','BARD-3','BRP-9','GSMNP-5','HSP-9','NOCK-6','HW-7','UNF-9','FMU-4','WP-6','WP-9','WP-11','WP-3')
 
 ###Linking to traits
-## dem <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/Phytotron\ colonies\ 2013\ Traits.xlsx',sheet=1) ###demography
-## dev <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/Phytotron\ colonies\ 2013\ Traits.xlsx',sheet=2) ###developmental traits
-## mor <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/Phytotron\ colonies\ 2013\ Traits.xlsx',sheet=3) ###mortality
+dem <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/Phytotron\ colonies\ 2013\ Traits.xlsx',sheet=1) ###demography
+dem <- dem[1:46,]
+### dev <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/Phytotron\ colonies\ 2013\ Traits.xlsx',sheet=2) ###developmental traits
+### mor <- read.xls('/Users/Aeolus/Dropbox/WarmAntDimensions/Phytotron\ 2013/Phytotron\ colonies\ 2013\ Traits.xlsx',sheet=3) ###mortality
+dem[,5] <- dem[,5] * -1
+plot(dem[,5:4],pch='',xlim=range(dem[,5])+c(-5,5))
+text(dem[,5:4],labels=dem$Colony.ID,cex=0.75)
