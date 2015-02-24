@@ -2,12 +2,7 @@
 
 
 waQC <- function(seqs,quality.threshold = 0.8){
-
   ac <- apply(do.call(rbind,lapply(seqs,table)),1,function(x) x/sum(x))
-  if (any(ac[(rownames(ac) %in% c('a','t','c','g')) == FALSE,] > quality.threshold)){
-    warning(paste('These samples have at least one ambig code at a level greater than ',quality.threshold*100,'%.',sep=''))
-    print(colnames(ac)[apply(ac,2,function(x) any(x > quality.threshold))])
-  }
   seq.rm <- colnames(ac)[apply(ac[(rownames(ac) %in% c('a','t','c','g')) == FALSE,],2,sum) > quality.threshold]
   seqs <- seqs[names(seqs) %in% seq.rm == FALSE]
   return(seqs)
