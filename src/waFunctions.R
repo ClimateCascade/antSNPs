@@ -8,11 +8,25 @@ waSampleIDs <- function(x='sequence labels'){
   return(rad.labs)
 }
 
-waQC <- function(seqs,quality.threshold = 0.8){
+waQC <- function(seqs,quality.threshold = 0.8,rm.count=FALSE){
+  if (class(seqs) == 'DNAbin'){seqs <- waConvert(seqs);DNAbin.class <- TRUE}else{DNAbin.class <- FALSE}
+  start.length <- length(seqs)
   ac <- apply(do.call(rbind,lapply(seqs,table)),1,function(x) x/sum(x))
-  seq.rm <- colnames(ac)[apply(ac[(rownames(ac) %in% c('a','t','c','g')) == FALSE,],2,sum) > quality.threshold]
-  seqs <- seqs[names(seqs) %in% seq.rm == FALSE]
-  return(seqs)
+  seqs <- seqs[names(seqs) %in% colnames(ac)[ac[rownames(ac) == 'n'] <= quality.threshold]]
+  end.length <- length(seqs)
+  if (DNAbin.class){seqs <- waConvert(seqs)}else{}
+  if (rm.count){start.length-end.length}else{
+    print(paste(I(start.length - end.length)," sequences removed",sep=''))
+    return(seqs)
+  }
+}
+
+waConvert <- function(x){
+  if (class(x) == 'DNAbin'){
+    x <- as.character(x)
+    if (class(x) == 'matrix'){x.l <- split(x,row(x));names(x.l) <- rownames(x);x <- x.l}
+  }else if (class(x) == 'list'){x <- as.DNAbin(x)}else{warning('Unknown data class.')}
+  return(x)
 }
 
 

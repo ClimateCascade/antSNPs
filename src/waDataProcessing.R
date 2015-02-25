@@ -2,6 +2,7 @@
 ###SNP data processing
 
 ## sample information 
+library('adegenet')
 library('gdata')
 library('seqinr')
 library('ape')
