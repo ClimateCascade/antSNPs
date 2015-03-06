@@ -1,11 +1,10 @@
 ###Warm Ant Dimensions SNP data processing functions
 
-arInfo <- function(){
-    if (all(dir() != 'Output')){
-        warning('Output directory not detected. Make sure you are in the correct working directory.')
+arInfo <- function(ltp.path='./'){
+    if (all(dir() != 'MasterReport.txt')){
+        warning('Please move to the directory containing the aftrRAD Genotype.pl output.')
     }else{
         require('txtplot',quiet=TRUE)
-        setwd('Output/RunInfo')
                                         #aftrRAD run information
         report <- readLines(dir()[grep('Report_*.txt',dir())][1]);report <- sub('\t',' ',report[report != ""])
         print(report)
@@ -16,11 +15,11 @@ arInfo <- function(){
         txtplot(mdp,ylim=c(0,1),xlab='Individual Index')
         print(names)
                                 #SNP Locations for read length assessment
-        LocationsToPlot<-scan(file="../../TempFiles/SNPLocationsToPlot.txt")
+        LocationsToPlot <- scan(file=paste(ltp.path,"SNPLocationsToPlot.txt",sep=''))
         ltp <- table(LocationsToPlot)
         ltp <- ltp
         bins <- as.numeric(names(ltp))
-        txtplot(bins,ltp)
+        txtplot(bins,ltp,xlab='Read Position',ylab='Frequency')
     }
 }
 
