@@ -1,0 +1,10 @@
+A total of 48 individuals were analyzed.
+No samples were removed from the analyses prior to genotyping.
+
+Total number of paralogous loci identified and removed is	567
+Total number of monomorphic loci identified is	17574 
+Total number of polymorphic loci identified is	1007
+
+The average read depth across all polymorphic and monomorphic loci is 6.6103391672254
+The median read depth across all polymorphic and monomorphic loci is 4
+

@@ -1,6 +1,58 @@
 antSNPs
 =======
 
+##4mar2015
+
+PHRED Quality Scores for Illimina 1.8+
+L - Illumina 1.8+ Phred+33,  raw reads typically (0, 41)
+
+LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+!"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJ
+0.2......................26...31.........41
+012345678911111111112222222222333333333344
+__________01234567890123456789012345678901
+--------------++++++++++++++++++++++++++++
+
+A phred score of 14 or higher is equivalent to a probability of
+incorrect assignment of 0.05 or lower.
+
+###Quality score mapping
+```
+library(txtplot)
+q <- 0:41
+p <- 10^(-q/10)
+txtplot(p,q,pch='.')
+```
+
+##2mar2015
+
+Based on a recently published paper (Sovic et al 2015, Mol Ecol
+Resources), Stacks doesn't account for indel variation and pyRAD,
+which does, is extremely slow. AftrRAD is similar to Stacks in compute
+time and accounts for indel variation and seems to have a complete
+pipeline from demultiplexing to output for analytical packages
+(structure, genepop, etc.).  
+
+Just finished the example for AftrRAD, and it worked quickly with the
+example dataset on Aeolus (Macbook Air, duo-core). Outline of
+workflow:
+
++ git clone AtfrRAD
++ install ACANA
++ install Mafft
++ R and appropriate packages should also be installed
++ create Data and Barcode directories
++ populate with data and barcode files
++ specify the data and barcode file arguments (this is essential as
+- AtrRAD will be looking for them specifically)
++ specify other arguments appropriate to the dataset
++ perl AftRAD.pl minDepth-3 (to demultiplex)
++ perl genotype.pl 
++ perl filtersnps.pl
++ perl outputStructure.pl
++ perl outputGenepop.pl
+
+
 ##30jan2015
 spatial ecology from Jose-Marie Fortin
 http://www.cambridge.org/us/academic/subjects/life-sciences/ecology-and-conservation/spatial-analysis-guide-ecologists

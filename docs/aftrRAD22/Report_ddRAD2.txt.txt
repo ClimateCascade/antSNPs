@@ -1,0 +1,83 @@
+Run information for datafile ddRAD2.txt
+
+Parameters used for this run...
+
+minParalog	5
+minDepth	3
+MaxH	90
+P2	ATTAGATC
+BarcodePath	Barcodes/
+minQual	20
+re	NATGG
+numIndels	3
+Phred	33
+minIden	90
+stringLength	15
+dplexedData	0
+Help	0
+DataPath	Data/
+The total number of reads in the fastq file is 94081886.
+
+You entered ATTAGATC as the beginning of the P2 adaptor.  14417140 reads contained this string and were discarded, leaving 79664746 reads for further analysis.
+
+Of these 79664746 sequences, 52224001 reads were an exact match to one of your barcodes and 27440745 were not.
+
+Of the 27440745 not matching a barcode exactly, 10065491 reads had barcodes that could be confidently assigned to one of your barcodes.
+
+This left 62289492 sequences.
+
+Of these 62289492 reads, 41595813 contained restriction enzymes recognition sites that were 2 or more bases away from your recognition site and were discarded, leaving 20693679 reads for further analysis.
+
+Of these 20693679 sequences, 8428979 were removed because they contained at least one base that had a quality score below the minimum value of 20, leaving 12264700 sequences.
+
+Of these 12264700, 153 additional reads were removed from the dataset because they contained a homopolymer at least 15 bases long.
+
+This left 12264547 sequences for further analysis.
+The number of unique sequences for individual 04B is329582 TempFiles/UniqueWithCountsIndividual04B.txt
+The number of unique sequences for individual 02C is202717 TempFiles/UniqueWithCountsIndividual02C.txt
+The number of unique sequences for individual 05D is127247 TempFiles/UniqueWithCountsIndividual05D.txt
+The number of unique sequences for individual 07B is118663 TempFiles/UniqueWithCountsIndividual07B.txt
+The number of unique sequences for individual HF28 is348758 TempFiles/UniqueWithCountsIndividualHF28.txt
+The number of unique sequences for individual NSP9 is361030 TempFiles/UniqueWithCountsIndividualNSP9.txt
+The number of unique sequences for individual NSP3 is293794 TempFiles/UniqueWithCountsIndividualNSP3.txt
+The number of unique sequences for individual NSP6 is212122 TempFiles/UniqueWithCountsIndividualNSP6.txt
+The number of unique sequences for individual NSP4 is316202 TempFiles/UniqueWithCountsIndividualNSP4.txt
+The number of unique sequences for individual NSP11 is131356 TempFiles/UniqueWithCountsIndividualNSP11.txt
+The number of unique sequences for individual Nock3 is182752 TempFiles/UniqueWithCountsIndividualNock3.txt
+The number of unique sequences for individual NSP7 is158541 TempFiles/UniqueWithCountsIndividualNSP7.txt
+The number of unique sequences for individual Nock5 is131431 TempFiles/UniqueWithCountsIndividualNock5.txt
+The number of unique sequences for individual HSP4 is158967 TempFiles/UniqueWithCountsIndividualHSP4.txt
+The number of unique sequences for individual Nock4 is204257 TempFiles/UniqueWithCountsIndividualNock4.txt
+The number of unique sequences for individual Nock9 is235636 TempFiles/UniqueWithCountsIndividualNock9.txt
+The number of unique sequences for individual Nock1 is134910 TempFiles/UniqueWithCountsIndividualNock1.txt
+The number of unique sequences for individual HSP8 is181946 TempFiles/UniqueWithCountsIndividualHSP8.txt
+The number of unique sequences for individual HSP9 is59062 TempFiles/UniqueWithCountsIndividualHSP9.txt
+The number of unique sequences for individual HSP1 is57131 TempFiles/UniqueWithCountsIndividualHSP1.txt
+The number of unique sequences for individual Nock7 is41132 TempFiles/UniqueWithCountsIndividualNock7.txt
+The number of unique sequences for individual Nock10 is106261 TempFiles/UniqueWithCountsIndividualNock10.txt
+The number of unique sequences for individual Nock2 is119993 TempFiles/UniqueWithCountsIndividualNock2.txt
+The number of unique sequences for individual HSP2 is205664 TempFiles/UniqueWithCountsIndividualHSP2.txt
+The number of unique sequences for individual HF25 is137849 TempFiles/UniqueWithCountsIndividualHF25.txt
+The number of unique sequences for individual NSP8 is299544 TempFiles/UniqueWithCountsIndividualNSP8.txt
+The number of unique sequences for individual NSP1 is120073 TempFiles/UniqueWithCountsIndividualNSP1.txt
+The number of unique sequences for individual NSP10 is149563 TempFiles/UniqueWithCountsIndividualNSP10.txt
+The number of unique sequences for individual WP5 is53152 TempFiles/UniqueWithCountsIndividualWP5.txt
+The number of unique sequences for individual WP1 is73584 TempFiles/UniqueWithCountsIndividualWP1.txt
+The number of unique sequences for individual WP3 is100753 TempFiles/UniqueWithCountsIndividualWP3.txt
+The number of unique sequences for individual WP4 is78896 TempFiles/UniqueWithCountsIndividualWP4.txt
+The number of unique sequences for individual NSP12 is254112 TempFiles/UniqueWithCountsIndividualNSP12.txt
+The number of unique sequences for individual WP12 is145986 TempFiles/UniqueWithCountsIndividualWP12.txt
+The number of unique sequences for individual WP8 is136169 TempFiles/UniqueWithCountsIndividualWP8.txt
+The number of unique sequences for individual NSP2 is119795 TempFiles/UniqueWithCountsIndividualNSP2.txt
+The number of unique sequences for individual NSP5 is143113 TempFiles/UniqueWithCountsIndividualNSP5.txt
+The number of unique sequences for individual WP13 is356447 TempFiles/UniqueWithCountsIndividualWP13.txt
+The number of unique sequences for individual WP10 is225130 TempFiles/UniqueWithCountsIndividualWP10.txt
+The number of unique sequences for individual Ijans3 is286560 TempFiles/UniqueWithCountsIndividualIjans3.txt
+The number of unique sequences for individual HW8 is185545 TempFiles/UniqueWithCountsIndividualHW8.txt
+The number of unique sequences for individual IjansQ2 is245718 TempFiles/UniqueWithCountsIndividualIjansQ2.txt
+The number of unique sequences for individual HW2 is100206 TempFiles/UniqueWithCountsIndividualHW2.txt
+The number of unique sequences for individual HW6 is74006 TempFiles/UniqueWithCountsIndividualHW6.txt
+The number of unique sequences for individual HW9 is259872 TempFiles/UniqueWithCountsIndividualHW9.txt
+The number of unique sequences for individual HW3 is91245 TempFiles/UniqueWithCountsIndividualHW3.txt
+The number of unique sequences for individual EW4 is311512 TempFiles/UniqueWithCountsIndividualEW4.txt
+The number of unique sequences for individual HF37 is218794 TempFiles/UniqueWithCountsIndividualHF37.txt
