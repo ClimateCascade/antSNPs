@@ -1,5 +1,30 @@
 ###Warm Ant Dimensions SNP data processing functions
 
+arInfo <- function(){
+    if (all(dir() != 'Output')){
+        warning('Output directory not detected. Make sure you are in the correct working directory.')
+    }else{
+        require('txtplot',quiet=TRUE)
+        setwd('Output/RunInfo')
+                                        #aftrRAD run information
+        report <- readLines(dir()[grep('Report_*.txt',dir())][1]);report <- sub('\t',' ',report[report != ""])
+        print(report)
+                                        #missing data proportions for quality assessment
+        mdp <- read.delim('MissingDataProportions.txt',sep='\t',head=FALSE) 
+        names <- sub('Individual','',mdp[,1])
+        mdp <- mdp[,2]
+        txtplot(mdp,ylim=c(0,1),xlab='Individual Index')
+        print(names)
+                                #SNP Locations for read length assessment
+        LocationsToPlot<-scan(file="../../TempFiles/SNPLocationsToPlot.txt")
+        ltp <- table(LocationsToPlot)
+        ltp <- ltp
+        bins <- as.numeric(names(ltp))
+        txtplot(bins,ltp)
+    }
+}
+
+
 waSampleIDs <- function(x='sequence labels'){
   rad.labs <- toupper(x)
   rad.labs <- sub('00','',sub('_TRIMMED_FILTERED','',rad.labs))
