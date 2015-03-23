@@ -2,7 +2,7 @@
 
 #Assume you are working locally (./) with an unzipped file 
 lane=ddRAD2
-rads_input=ddRAD2.fq #unzipped file name
+rads_input=../../../test_aftrrad/test1/Data/ddRAD2  #unzipped file name
 barcodes=ddRAD2.txt #formatted: GCATG	03A.fq
 FASTX=/N/soft/mason/galaxy-apps/fastx_toolkit_0.0.13/fastx_trimmer
 FASTQ=/N/soft/mason/galaxy-apps/fastx_toolkit_0.0.13/fastq_quality_filter
@@ -11,6 +11,7 @@ FASTQ=/N/soft/mason/galaxy-apps/fastx_toolkit_0.0.13/fastq_quality_filter
 #################################
 #demultiplex, trim, filter
 #################################
+mkdir $lane
 sabre se -m 1 -f $rads_input -b $barcodes -u unknown.fq
 
 cd $lane
