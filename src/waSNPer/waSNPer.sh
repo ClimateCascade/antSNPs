@@ -5,11 +5,6 @@
 ### correct location on the server.
 ####################################################
 
-#Load modules
-module load stacks
-module load bowtie
-
-
 ##############################
 ### Setup
 ##############################
@@ -27,7 +22,9 @@ minprog=3 #genotype.pl -r = minimum number of progeny to keep read
 minstack=2 #genotype.pl -m = minimum stack depth for exporting a locus
 maptype=GEN #genotype.pl -t = map type ('CP', 'DH', 'F2', 'BC1', and 'GEN')
 
-#setup alieses
+#Load modules and alieses
+module load stacks
+module load bowtie
 FASTX=/N/soft/mason/galaxy-apps/fastx_toolkit_0.0.13/fastx_trimmer
 FASTQ=/N/soft/mason/galaxy-apps/fastx_toolkit_0.0.13/fastq_quality_filter
 
@@ -74,8 +71,8 @@ for X in $fqs;
 do 
     echo "-s ./sam/$X.sam \\" | tee -a "sam_map.sh"
 done
-echo "-o ./rm_out -n $nmismatch -m $mindepth -T $nthreads -b $batchid " | tee -a "sam_map.sh"
-mkdir output
+echo "-o ./rm_out -n $nmismatch -m $mindepth -T $nthreads -b $batchid -S" | tee -a "sam_map.sh"
+mkdir rm_out
 sh sam_map.sh
 
 ###############
@@ -83,19 +80,23 @@ sh sam_map.sh
 ###############
 genotypes -b $batchid -P ./rm_out -r $minprog -m $minstack -t GEN -s
 
-##################
-### SNP Filtering
-##################
+################################
+### SNP Filtering and Output
+################################
+
+INPUT=./rm_out/batch_$batchid.haplotypes_$minprog.tsv
+VAR=./rm_out/batch_$batchid.haplotypes_variable.tsv
+DIP=./rm_out/batch_$batchid.haplotypes_variable$minstack.tsv
+AMBIG=./rm_out/batch_$batchid.haplotypes_variable$minstack_single.tsv
+
+### Fix CatalogID 
+sed "s|Catalog ID|CatalogID|g" $INPUT > $INPUT
+sed "s|Catalog ID|CatalogID|g" $VAR > $VAR
 
 #### add input variables
 #### add correct input file
 ### python ../Filtering_taxaNUM_SNPnum.py input???
 
-# change Catalog ID to CatalogID
-INPUT=./rm_out/batch_$batchid.haplotypes_$minprog.tsv
-VAR=./rm_out/batch_$batchid.haplotypes_variable.tsv
-DIP=./rm_out/batch_$batchid.haplotypes_variable$minstack.tsv
-AMBIG=./rm_out/batch_$batchid.haplotypes_variable$minstack_single.tsv
 grep -v "consensus" $INPUT > $VAR
 grep -v "\w*/\w*/" $VAR > $DIP
 python ../haplotype_to_ambig_code.py $DIP
