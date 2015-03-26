@@ -8,6 +8,7 @@ Optional to use a list of RAD_IDs to select only a subset of SNPs for the sequen
 import sys
 
 InFileName = sys.argv[1]
+OutFileName = sys.argv[2]
 InFile = open(InFileName, 'r')
 LineCounter = 0
 SampleDict = {}
@@ -57,7 +58,6 @@ for Line in InFile:
 #print SampleDict[SampleList[Number]]
 InFile.close()
 
-OutFileName = "waSNPs.fas"
 OutFile = open(OutFileName, 'w')
 for Sample in SampleDict.keys():
 	print Sample, len(SampleDict[Sample])
