@@ -96,7 +96,6 @@ AMBIG=./output/batch_$batchid.haplotypes_variable$minstack_single.tsv
 
 ### Fix CatalogID 
 sed -i "s|Catalog ID|CatalogID|g" $INPUT
-sed -i "s|Catalog ID|CatalogID|g" $VAR
 
 #### add input variables
 #### add correct input file
